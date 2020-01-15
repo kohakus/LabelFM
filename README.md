@@ -13,7 +13,7 @@ The GUI used in LabelFM is originally [Dear ImGui](https://github.com/ocornut/im
 
 The Dependency of this project is almost the same as pyimgui. In this project, the GLFW3 is used as the rendering backend. To install imgui with different built-in backend integrations, just follow the installation guide of pyimgui: [pyimgui.readthedocs.io](https://pyimgui.readthedocs.io/en/latest/index.html).
 
-Besides, The Image library Pillow and the python fundamental package NumPy are also needed.
+Besides, The open source Image library Pillow, the computer vision library OpenCV and the python fundamental package NumPy are also needed.
 
 ### Examples
 
