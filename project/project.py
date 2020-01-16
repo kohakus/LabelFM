@@ -516,7 +516,29 @@ def region_label_content(labelfm_flags, labelfm_env_flags, labelfm_anno_params):
     imgui.pop_style_color(3)
 
     if annotation_save_clicked:
-        save_label(labelfm_env_flags, labelfm_anno_params)
+        save_label_state = save_label(labelfm_env_flags, labelfm_anno_params)
+        if save_label_state:
+            imgui.open_popup("Saved Successfully!")
+        else:
+            imgui.open_popup("Save Failed!")
+
+    if imgui.begin_popup_modal( "Save Failed!",
+                                flags=imgui.WINDOW_NO_RESIZE |\
+                                      imgui.WINDOW_ALWAYS_AUTO_RESIZE )[0]:
+        imgui.text("Save Failed! Please select an image and do labeling.")
+        imgui.same_line()
+        if imgui.small_button("Ok, I will Check Again"):
+            imgui.close_current_popup()
+        imgui.end_popup()
+
+    if imgui.begin_popup_modal( "Saved Successfully!",
+                                flags=imgui.WINDOW_NO_RESIZE |\
+                                      imgui.WINDOW_ALWAYS_AUTO_RESIZE )[0]:
+        imgui.text("Current Label has been saved successfully!")
+        imgui.same_line()
+        if imgui.small_button("Ok, close this popup."):
+            imgui.close_current_popup()
+        imgui.end_popup()
 
     if annotation_reset_clicked:
         labelfm_anno_params["POINT_CLEAR_SIGNAL"] = True

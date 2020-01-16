@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import cv2
 import math
 import time
 import imgui
@@ -98,3 +99,18 @@ def get_plane_route(plane):
         route = route + "{} -> ".format(line[0])
     route = route + "{}".format(plane[0][0])
     return route
+
+
+def draw_arrow(image, pStart, pEnd, color, tipLength, thickness=1, alpha=17, line_type=cv2.LINE_AA):
+    angle = math.atan2(float(pStart[1]-pEnd[1]), float(pStart[0]-pEnd[0]))
+    arrowx = ( pEnd[0] + round(tipLength * math.cos(angle + math.pi * alpha / 180)),
+               pEnd[1] + round(tipLength * math.sin(angle + math.pi * alpha / 180)) )
+    arrowy = ( pEnd[0] + round(tipLength * math.cos(angle - math.pi * alpha / 180)),
+               pEnd[1] + round(tipLength * math.sin(angle - math.pi * alpha / 180)) )
+    cv2.line(image, pStart, pEnd, color, thickness, line_type)
+    cv2.line(image, pEnd, arrowx, color, thickness, line_type)
+    cv2.line(image, pEnd, arrowy, color, thickness, line_type)
+
+
+def round_tuple(tps):
+    return tuple(map(round, tps))
